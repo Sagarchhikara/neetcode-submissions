@@ -1,0 +1,53 @@
+class Solution {
+    public boolean search(int[] nums, int target) {
+
+        int l = 0;
+        int r = nums.length - 1;
+
+        while (l <= r) {
+
+            int mid = l + (r - l) / 2;
+
+            // Target found
+            if (nums[mid] == target) {
+                return true;
+            }
+
+            // Cannot determine which half is sorted
+            if (nums[l] == nums[mid] && nums[mid] == nums[r]) {
+                l++;
+                r--;
+            }
+
+            // Left half is sorted
+            else if (nums[l] <= nums[mid]) {
+
+                // Target lies in left sorted half
+                if (nums[l] <= target && target < nums[mid]) {
+                    r = mid - 1;
+                }
+
+                // Target lies in right half
+                else {
+                    l = mid + 1;
+                }
+            }
+
+            // Right half is sorted
+            else {
+
+                // Target lies in right sorted half
+                if (nums[mid] < target && target <= nums[r]) {
+                    l = mid + 1;
+                }
+
+                // Target lies in left half
+                else {
+                    r = mid - 1;
+                }
+            }
+        }
+
+        return false;
+    }
+}
